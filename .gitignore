@@ -1,0 +1,15 @@
+node_modules
+*.log
+
+# Client
+/client/dist
+/client/tmp
+/client/out-tsc
+
+/client/.sass-cache
+/client/connect.lock
+/client/coverage
+/client/typings
+
+/client/e2e/*.js
+/client/e2e/*.map
