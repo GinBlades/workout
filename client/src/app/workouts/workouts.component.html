@@ -1,8 +1,9 @@
 <div class="cell">
   <h2>Workout List</h2>
   <ul>
-    <li>Workout 1</li>
-    <li>Workout 2</li>
+    <li *ngFor="let workout of workouts">
+      <a (click)="selectWorkout(workout)">{{ workout.name }}</a>
+    </li>
   </ul>
   <p><a href="#">Add New Workout</a></p>
 </div>

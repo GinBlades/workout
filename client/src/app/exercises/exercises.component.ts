@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Workout } from '../workout';
+import { WorkoutService } from '../workout.service';
 
 @Component({
   selector: 'app-exercises',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./exercises.component.css']
 })
 export class ExercisesComponent implements OnInit {
+  private selectedWorkout: Workout;
 
-  constructor() { }
+  constructor(private workoutService: WorkoutService) {
+    workoutService.selectedWorkout$.subscribe(workout => this.selectedWorkout = workout);
+  }
 
   ngOnInit() {
   }
-
 }

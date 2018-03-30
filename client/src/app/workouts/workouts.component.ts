@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkoutService } from '../workout.service';
+import { Workout } from '../workout';
 
 @Component({
   selector: 'app-workouts',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workouts.component.css']
 })
 export class WorkoutsComponent implements OnInit {
+  public workouts: Workout[];
 
-  constructor() { }
+  constructor(private workoutService: WorkoutService) { }
 
   ngOnInit() {
+    this.workoutService.fetchWorkouts().subscribe(data => {
+      this.workouts = <Workout[]>data
+      this.workoutService.setSelectedWorkout(this.workouts[0]);
+    });
   }
 
+  selectWorkout(workout) {
+    this.workoutService.setSelectedWorkout(workout);
+  }
 }
