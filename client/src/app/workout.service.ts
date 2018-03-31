@@ -21,11 +21,19 @@ export class WorkoutService {
     return this.workouts;
   }
 
-  public setWorkouts(workouts) {
+  public setWorkouts(workouts: Workout[]) {
     this.workouts = workouts;
+  }
+
+  public addWorkout(workout: Workout) {
+    this.workouts.push(workout);
   }
 
   public setSelectedWorkout(workout: Workout) {
     this.selectedWorkoutSource.next(workout);
+  }
+
+  public createWorkout(workout: Workout) {
+    return this.http.post("http://localhost:3000/workouts", workout);
   }
 }
