@@ -1,5 +1,5 @@
 export class Exercise {
-    public id: string;
+    public _id: string;
     public pictures: string[];
 
     constructor(

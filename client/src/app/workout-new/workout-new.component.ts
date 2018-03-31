@@ -17,7 +17,6 @@ export class WorkoutNewComponent implements OnInit {
   }
 
   addWorkout() {
-    console.log(this.model);
     this.workoutService.createWorkout(this.model);
     this.model = new Workout("", "");
   }

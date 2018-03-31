@@ -1,10 +1,9 @@
 <div class="cell">
   <h2>Exercise List</h2>
-  <div *ngIf="selectedWorkout">
+  <div *ngIf="exercises.length > 0">
     <ul>
-      <li *ngFor="let exercise of selectedWorkout.exercises">{{ exercise.name }}</li>
+      <li *ngFor="let exercise of exercises">{{ exercise.name }}</li>
     </ul>
-
-    <p><a href="#">Add New Exercise</a></p>
   </div>
+  <app-exercise-new></app-exercise-new>
 </div>

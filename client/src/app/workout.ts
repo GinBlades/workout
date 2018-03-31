@@ -1,7 +1,7 @@
 import { Exercise } from "./exercise";
 
 export class Workout {
-    public id: string;
+    public _id: string;
     public createdBy: string;
     public lastRun: Date;
     public exercises: Exercise[];

@@ -10,6 +10,8 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import { RunnerComponent } from './runner/runner.component';
 import { WorkoutService } from './workout.service';
 import { WorkoutNewComponent } from './workout-new/workout-new.component';
+import { ExerciseNewComponent } from './exercise-new/exercise-new.component';
+import { ExerciseService } from './exercise.service';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { WorkoutNewComponent } from './workout-new/workout-new.component';
     WorkoutsComponent,
     ExercisesComponent,
     RunnerComponent,
-    WorkoutNewComponent
+    WorkoutNewComponent,
+    ExerciseNewComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { WorkoutNewComponent } from './workout-new/workout-new.component';
     HttpClientModule
   ],
   providers: [
-    WorkoutService
+    WorkoutService,
+    ExerciseService
   ],
   bootstrap: [AppComponent]
 })

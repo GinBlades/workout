@@ -1,0 +1,21 @@
+<div>
+  <p *ngIf="!editing"><a (click)="editing = true">Add New Exercise</a></p>
+  <form id="new-exercise-form" *ngIf="editing" (ngSubmit)="addExercise()" #newExerciseForm="ngForm">
+    <fieldset>
+      <legend>Add Exercise</legend>
+      <div class="form-group">
+        <label for="new-exercise-name">Name</label>
+        <br>
+        <input type="" id="new-exercise-name" name="name" [(ngModel)]="model.name">
+      </div>
+      <div class="form-group">
+        <label for="new-exercise-description">Description</label>
+        <br>
+        <textarea name="description" id="new-exercise-description"
+          cols="20" rows="10" [(ngModel)]="model.description"></textarea>
+      </div>
+      <input type="submit" value="Add">
+      <a (click)="editing = false">Cancel</a>
+    </fieldset>
+  </form>
+</div>

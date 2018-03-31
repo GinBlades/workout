@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Workout } from './workout';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { ExerciseService } from './exercise.service';
 
 @Injectable()
 export class WorkoutService {
-  private workouts: Workout[];
-
   // BehaviorSubject returns a value even if no new 'next' is called.
   // This allows the array to be pushed to after aa new workout is created.
   private workoutsSource = new BehaviorSubject<Workout[]>([]);
@@ -16,7 +15,7 @@ export class WorkoutService {
   private selectedWorkoutSource = new Subject<Workout>();
   public selectedWorkout$ = this.selectedWorkoutSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private exerciseService: ExerciseService) { }
 
   public fetchWorkouts() {
     return this.http.get("http://localhost:3000/workouts").subscribe(data => {
@@ -27,6 +26,7 @@ export class WorkoutService {
 
   public setSelectedWorkout(workout: Workout) {
     this.selectedWorkoutSource.next(workout);
+    this.exerciseService.fromWorkout(workout);
   }
 
   public createWorkout(workout: Workout) {
