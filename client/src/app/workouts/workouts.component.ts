@@ -13,11 +13,8 @@ export class WorkoutsComponent implements OnInit {
   constructor(private workoutService: WorkoutService) { }
 
   ngOnInit() {
-    this.workoutService.fetchWorkouts().subscribe(data => {
-      this.workouts = <Workout[]>data
-      this.workoutService.setWorkouts(<Workout[]>data);
-      this.workoutService.setSelectedWorkout(this.workouts[0]);
-    });
+    this.workoutService.workouts$.subscribe(data => this.workouts = <Workout[]>data);
+    this.workoutService.fetchWorkouts();
   }
 
   selectWorkout(workout) {
