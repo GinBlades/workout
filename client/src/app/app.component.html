@@ -1,5 +1,10 @@
 <div class="container">
-  <app-runner></app-runner>
+  <div *ngIf="activePanel == 'editingExercise'">
+    <app-exercise-form></app-exercise-form>
+  </div>
+  <div *ngIf="activePanel == 'runningWorkout'">
+    <app-runner></app-runner>
+  </div>
   <app-exercises></app-exercises>
   <app-workouts></app-workouts>
 </div>

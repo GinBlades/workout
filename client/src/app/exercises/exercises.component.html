@@ -2,7 +2,12 @@
   <h2>Exercise List</h2>
   <div *ngIf="exercises.length > 0">
     <ul>
-      <li *ngFor="let exercise of exercises">{{ exercise.name }}</li>
+      <li *ngFor="let exercise of exercises">
+        {{ exercise.name }}
+        (<a (click)="editExercise(exercise)">Edit</a>
+        |
+        <a (click)="deleteExercise(exercise)">X</a>)
+      </li>
     </ul>
   </div>
   <app-exercise-new></app-exercise-new>

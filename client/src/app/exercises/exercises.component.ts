@@ -16,4 +16,12 @@ export class ExercisesComponent implements OnInit {
   ngOnInit() {
     this.exerciseService.exercises$.subscribe(data => this.exercises = data);
   }
+
+  editExercise(exercise) {
+    this.exerciseService.setEditingExercise(exercise);
+  }
+
+  deleteExercise(exercise) {
+    this.exerciseService.deleteExercise(exercise);
+  }
 }
