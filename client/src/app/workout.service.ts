@@ -36,4 +36,13 @@ export class WorkoutService {
       });
     });
   }
+
+  public deleteWorkout(workout: Workout) {
+    return this.http.delete(`http://localhost:3000/workouts/${workout._id}`).subscribe(empty => {
+      this.workoutsSource.subscribe(workouts => {
+        let index = workouts.map(wo => wo._id).indexOf(workout._id);
+        workouts.splice(index, 1);
+      });
+    })
+  }
 }

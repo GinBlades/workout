@@ -1,16 +1,19 @@
 <div class="cell">
-  <h2>
-    <a href="#">Start Workout 1</a>
-  </h2>
-  <div>
-    <h3>Exercise 1</h3>
-    <p>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-      Amet nesciunt ipsum ipsa! Non assumenda ipsum dolores eveniet!
-      Nobis eum fugit ad, nemo itaque architecto magnam distinctio maxime fugiat sit quam!
-    </p>
-    <p>
-      30 seconds left
-    </p>
+  <div *ngIf="!currentWorkout">
+    <p>Select a workout from the list</p>
+  </div>
+  <div *ngIf="currentWorkout">
+    <h2>
+      <a href="#">{{ currentWorkout.name }}</a>
+    </h2>
+    <div>
+      <h3>{{ currentExercise.name }}</h3>
+      <p>
+        {{ currentExercise.description }}
+      </p>
+      <p>
+        {{ currentExercise.duration }}
+      </p>
+    </div>
   </div>
 </div>

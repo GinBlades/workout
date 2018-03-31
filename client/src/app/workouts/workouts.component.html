@@ -3,6 +3,9 @@
   <ul>
     <li *ngFor="let workout of workouts">
       <a (click)="selectWorkout(workout)">{{ workout.name }}</a>
+      (<a (click)="editWorkout(workout)">Edit</a>
+      |
+      <a (click)="deleteWorkout(workout)">X</a>)
     </li>
   </ul>
   <app-workout-new></app-workout-new>

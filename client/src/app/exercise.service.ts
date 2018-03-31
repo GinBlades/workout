@@ -8,17 +8,29 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class ExerciseService {
   private workout: Workout;
+  private exercises: Exercise[];
+
   private exercisesSource = new Subject<Exercise[]>();
   public exercises$ = this.exercisesSource.asObservable();
+
+  private currentExerciseSource = new Subject<Exercise>();
+  public currentExercise$ = this.currentExerciseSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
   public fromWorkout(workout: Workout) {
     this.workout = workout;
     if (workout.exercises === undefined || workout.exercises === null) {
-      this.exercisesSource.next([]);
+      this.exercises = [];
     } else {
-      this.exercisesSource.next(workout.exercises);
+      this.exercises = workout.exercises;
+    }
+    this.exercisesSource.next(this.exercises);
+
+    if (this.exercises.length > 0) {
+      this.currentExerciseSource.next(workout.exercises[0]);
+    } else {
+      this.currentExerciseSource.next(new Exercise("", "", 0, 0, false));
     }
   }
 

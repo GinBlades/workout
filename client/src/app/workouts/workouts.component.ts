@@ -20,4 +20,12 @@ export class WorkoutsComponent implements OnInit {
   selectWorkout(workout) {
     this.workoutService.setSelectedWorkout(workout);
   }
+
+  editWorkout(workout) {
+
+  }
+
+  deleteWorkout(workout) {
+    this.workoutService.deleteWorkout(workout);
+  }
 }
