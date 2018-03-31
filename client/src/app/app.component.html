@@ -1,4 +1,7 @@
 <div class="container">
+  <div *ngIf="activePanel == 'editingWorkout'">
+    <app-workout-form></app-workout-form>
+  </div>
   <div *ngIf="activePanel == 'editingExercise'">
     <app-exercise-form></app-exercise-form>
   </div>

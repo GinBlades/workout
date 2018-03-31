@@ -9,10 +9,9 @@ import { WorkoutsComponent } from './workouts/workouts.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { RunnerComponent } from './runner/runner.component';
 import { WorkoutService } from './workout.service';
-import { WorkoutNewComponent } from './workout-new/workout-new.component';
-import { ExerciseNewComponent } from './exercise-new/exercise-new.component';
 import { ExerciseService } from './exercise.service';
 import { ExerciseFormComponent } from './exercise-form/exercise-form.component';
+import { WorkoutFormComponent } from './workout-form/workout-form.component';
 
 
 @NgModule({
@@ -21,9 +20,8 @@ import { ExerciseFormComponent } from './exercise-form/exercise-form.component';
     WorkoutsComponent,
     ExercisesComponent,
     RunnerComponent,
-    WorkoutNewComponent,
-    ExerciseNewComponent,
-    ExerciseFormComponent
+    ExerciseFormComponent,
+    WorkoutFormComponent
   ],
   imports: [
     BrowserModule,

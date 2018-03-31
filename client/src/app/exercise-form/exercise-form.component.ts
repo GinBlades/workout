@@ -23,7 +23,12 @@ export class ExerciseFormComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.model);
+    if (this.model._id) {
+      this.exerciseService.updateExercise(this.model);
+    } else {
+      this.exerciseService.createExercise(this.model);
+    }
+    this.cancel();
   }
 
   cancel() {

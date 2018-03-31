@@ -20,6 +20,12 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.exerciseService.editingExercise$.subscribe(data => this.setEditingExercise(data));
     this.workoutService.selectedWorkout$.subscribe(data => this.setRunningWorkout(data));
+    this.workoutService.editingWorkout$.subscribe(data => this.setEditingWorkout(data));
+    this.setActivePanel();
+  }
+
+  setEditingWorkout(workout) {
+    this.editingWorkout = workout;
     this.setActivePanel();
   }
 

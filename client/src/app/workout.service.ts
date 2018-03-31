@@ -15,6 +15,9 @@ export class WorkoutService {
   private selectedWorkoutSource = new Subject<Workout>();
   public selectedWorkout$ = this.selectedWorkoutSource.asObservable();
 
+  private editingWorkoutSource = new BehaviorSubject<Workout>(null);
+  public editingWorkout$ = this.editingWorkoutSource.asObservable();
+
   constructor(private http: HttpClient, private exerciseService: ExerciseService) { }
 
   public fetchWorkouts() {
@@ -29,12 +32,26 @@ export class WorkoutService {
     this.exerciseService.fromWorkout(workout);
   }
 
+  public setEditingWorkout(workout: Workout) {
+    this.editingWorkoutSource.next(workout);
+  }
+
   public createWorkout(workout: Workout) {
     return this.http.post("http://localhost:3000/workouts", workout).subscribe(newWorkout => {
       this.workoutsSource.subscribe(workouts => {
         workouts.push(<Workout>newWorkout);
       });
     });
+  }
+
+  public updateWorkout(workout: Workout) {
+    return this.http.put(`http://localhost:3000/workouts/${workout._id}`, workout)
+      .subscribe(updatedWorkout => {
+        this.workoutsSource.subscribe(workouts => {
+          let index = workouts.map(wo => wo._id).indexOf(workout._id);
+          workouts.splice(index, 1, <Workout>updatedWorkout);
+        });
+      })
   }
 
   public deleteWorkout(workout: Workout) {

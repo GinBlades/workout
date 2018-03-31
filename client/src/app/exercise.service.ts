@@ -16,7 +16,7 @@ export class ExerciseService {
   private currentExerciseSource = new Subject<Exercise>();
   public currentExercise$ = this.currentExerciseSource.asObservable();
 
-  private editingExerciseSource = new BehaviorSubject<Exercise>(new Exercise("", "", 30, 1, false));
+  private editingExerciseSource = new BehaviorSubject<Exercise>(null);
   public editingExercise$ = this.editingExerciseSource.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -39,6 +39,13 @@ export class ExerciseService {
 
   public createExercise(exercise: Exercise) {
     this.http.post(`http://localhost:3000/workouts/${this.workout._id}/exercises`, exercise)
+      .subscribe(data => {
+        this.fromWorkout(<Workout>data);
+      });
+  }
+
+  public updateExercise(exercise: Exercise) {
+    this.http.put(`http://localhost:3000/workouts/${this.workout._id}/exercises/${exercise._id}`, exercise)
       .subscribe(data => {
         this.fromWorkout(<Workout>data);
       });

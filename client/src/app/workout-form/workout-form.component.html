@@ -1,0 +1,18 @@
+<form id="workout-form" (ngSubmit)="submit()" #workoutForm="ngForm">
+  <fieldset>
+    <legend>Workout</legend>
+    <div class="form-group">
+      <label for="workout-name">Name</label>
+      <br>
+      <input type="" id="workout-name" name="name" [(ngModel)]="model.name">
+    </div>
+    <div class="form-group">
+      <label for="workout-description">Description</label>
+      <br>
+      <textarea name="description" id="workout-description"
+        cols="20" rows="10" [(ngModel)]="model.description"></textarea>
+    </div>
+    <input type="submit" value="Add">
+    <a (click)="cancel()">Cancel</a>
+  </fieldset>
+</form>

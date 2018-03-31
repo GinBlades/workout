@@ -22,6 +22,12 @@ export class ExercisesComponent implements OnInit {
   }
 
   deleteExercise(exercise) {
-    this.exerciseService.deleteExercise(exercise);
+    if (confirm("Are you sure you want to delete this exercise?")) {
+      this.exerciseService.deleteExercise(exercise);
+    }
+  }
+
+  newExercise() {
+    this.exerciseService.setEditingExercise(new Exercise("", "", 30, 1, false));
   }
 }
