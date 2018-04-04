@@ -15,6 +15,7 @@ export class ExerciseFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("Init");
     this.exerciseService.editingExercise$.subscribe(data => {
       if (data !== undefined || data !== null) {
         this.model = data;

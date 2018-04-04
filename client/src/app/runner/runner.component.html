@@ -4,9 +4,10 @@
   </div>
   <div *ngIf="currentWorkout">
     <h2>
-      <a href="#">{{ currentWorkout.name }}</a>
+      {{ currentWorkout.name }}
+      <button (click)="runWorkout()">Start</button>
     </h2>
-    <div>
+    <div *ngIf="currentExercise">
       <h3>{{ currentExercise.name }}</h3>
       <p>
         {{ currentExercise.description }}
@@ -15,5 +16,12 @@
         {{ currentExercise.duration }}
       </p>
     </div>
+    <audio id="tick-sound">
+      <source src="{{ tickSoundUrl }}" type="audio/mpeg" />
+    </audio>
+    <audio id="switch-sound">
+      <source src="{{ switchSoundUrl }}" type="audio/mpeg" />
+    </audio>
+    <button (click)="pauseWorkout()">Pause</button>
   </div>
 </div>

@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  let workout = await Workout.find({_id: req.params.id});
+  let workout = await Workout.findById(req.params.id);
   res.json(workout);
 })
 

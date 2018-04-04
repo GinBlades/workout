@@ -4,9 +4,13 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Exercise } from './exercise';
 import { Workout } from './workout';
 import { Subject } from 'rxjs/Subject';
+import { environment } from "../environments/environment";
 
 @Injectable()
 export class ExerciseService {
+  public tickSound = environment.apiHost + "/metronome.mp3";
+  public switchSound = environment.apiHost + "/switch.mp3";
+
   private workout: Workout;
   private exercises: Exercise[];
 
@@ -38,14 +42,14 @@ export class ExerciseService {
   }
 
   public createExercise(exercise: Exercise) {
-    this.http.post(`http://localhost:3000/workouts/${this.workout._id}/exercises`, exercise)
+    this.http.post(`${environment.apiHost}/workouts/${this.workout._id}/exercises`, exercise)
       .subscribe(data => {
         this.fromWorkout(<Workout>data);
       });
   }
 
   public updateExercise(exercise: Exercise) {
-    this.http.put(`http://localhost:3000/workouts/${this.workout._id}/exercises/${exercise._id}`, exercise)
+    this.http.put(`${environment.apiHost}/workouts/${this.workout._id}/exercises/${exercise._id}`, exercise)
       .subscribe(data => {
         this.fromWorkout(<Workout>data);
       });
@@ -56,9 +60,19 @@ export class ExerciseService {
   }
 
   public deleteExercise(exercise: Exercise) {
-    this.http.delete(`http://localhost:3000/workouts/${this.workout._id}/exercises/${exercise._id}`)
+    this.http.delete(`${environment.apiHost}/workouts/${this.workout._id}/exercises/${exercise._id}`)
       .subscribe(data => {
         this.fromWorkout(<Workout>data);
       });
+  }
+
+  public nextExercise(exercise) {
+    let currentIndex = this.workout.exercises.map(e => e._id).indexOf(exercise._id);
+    let nextExercise = this.workout.exercises[currentIndex + 1];
+    if (nextExercise !== undefined) {
+      this.currentExerciseSource.next(nextExercise);
+    } else {
+      this.currentExerciseSource.next(null);
+    }
   }
 }
