@@ -3,6 +3,7 @@ import { WorkoutService } from './workout.service';
 import { ExerciseService } from './exercise.service';
 import { Workout } from './workout';
 import { Exercise } from './exercise';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,15 @@ export class AppComponent implements OnInit {
   editingWorkout: Workout;
   editingExercise: Exercise;
   activePanel: string;
+  loginPath: string;
 
-  constructor(private workoutService: WorkoutService, private exerciseService: ExerciseService) { }
+  constructor(
+    private workoutService: WorkoutService,
+    private exerciseService: ExerciseService,
+    private appService: AppService) {
+      const location = encodeURIComponent(window.location.href);
+      this.loginPath = appService.apiHost + "/login/token?redirect_to=" + location;
+    }
 
   ngOnInit() {
     this.exerciseService.editingExercise$.subscribe(data => this.setEditingExercise(data));

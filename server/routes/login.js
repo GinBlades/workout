@@ -23,10 +23,19 @@ const url = oauth2Client.generateAuthUrl({
 
 router.get("/token", (req, res) => {
     try {
+        debugger;
+        if (req.query.redirect_to && secrets.validRedirects.includes(req.query.redirect_to)) {
+            req.session.redirect_to = req.query.redirect_to;
+        }
         let token = req.cookies.authToken;
         let decoded = jwt.verify(token, secrets.jwtSecret);
         if (secrets.mockEmails.includes(decoded.email)) {
-            res.json({jwt: jwt.sign({email: decoded.email}, secrets.jwtSecret)});
+            if (req.session.redirect_to) {
+                const redirect = req.session.redirect_to;
+                req.session.redirect_to = null;
+                return res.redirect(redirect);
+            }
+            return res.json({jwt: jwt.sign({email: decoded.email}, secrets.jwtSecret)});
         }
         throw "Invalid token/email";
     } catch(err) {

@@ -12,6 +12,7 @@ import { WorkoutService } from './workout.service';
 import { ExerciseService } from './exercise.service';
 import { ExerciseFormComponent } from './exercise-form/exercise-form.component';
 import { WorkoutFormComponent } from './workout-form/workout-form.component';
+import { AppService } from './app.service';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { WorkoutFormComponent } from './workout-form/workout-form.component';
   ],
   providers: [
     WorkoutService,
-    ExerciseService
+    ExerciseService,
+    AppService
   ],
   bootstrap: [AppComponent]
 })
