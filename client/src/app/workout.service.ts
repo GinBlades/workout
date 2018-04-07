@@ -35,7 +35,6 @@ export class WorkoutService {
 
   public setSelectedWorkout(workout: Workout) {
     this.http.get(`${environment.apiHost}/workouts/${workout._id}`, this.appService.headerOptions()).subscribe(data => {
-      console.log(data);
       this.selectedWorkoutSource.next(<Workout>data);
       this.exerciseService.fromWorkout(<Workout>data);
     });

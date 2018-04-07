@@ -45,7 +45,6 @@ app.use((req, res, next) => {
     return next();
   }
 
-  console.log(req.headers);
   if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
     const token = req.headers.authorization.substring("Bearer ".length);
     const decoded = jwt.verify(token, secrets.jwtSecret);

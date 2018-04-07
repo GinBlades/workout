@@ -39,7 +39,6 @@ router.get("/token", (req, res) => {
         }
         throw "Invalid token/email";
     } catch(err) {
-        console.log(err);
         res.redirect(url);
     }
 });
@@ -56,7 +55,6 @@ router.get("/google", (req, res) => {
                     "Authorization": `Bearer ${oauth2Client.credentials.access_token}`
                 }
             }).then((result) => {
-                debugger;
                 console.log(result);
                 res.cookie("authToken", jwt.sign({email: result.data.email}, secrets.jwtSecret), {
                     maxAge: 86400 * 1000 // 24 hours
