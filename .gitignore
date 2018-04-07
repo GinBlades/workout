@@ -14,5 +14,7 @@ node_modules
 /client/e2e/*.js
 /client/e2e/*.map
 
+/client/src/environments/environment.prod.ts
+
 # Server
 /server/secrets.js
