@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { ExerciseService } from './exercise.service';
 import { environment } from "../environments/environment";
+import { AppService } from './app.service';
 
 @Injectable()
 export class WorkoutService {
@@ -19,17 +20,21 @@ export class WorkoutService {
   private editingWorkoutSource = new BehaviorSubject<Workout>(null);
   public editingWorkout$ = this.editingWorkoutSource.asObservable();
 
-  constructor(private http: HttpClient, private exerciseService: ExerciseService) { }
+  constructor(
+    private http: HttpClient,
+    private exerciseService: ExerciseService,
+    private appService: AppService
+  ) { }
 
   public fetchWorkouts() {
-    return this.http.get(`${environment.apiHost}/workouts`).subscribe(data => {
+    return this.http.get(`${environment.apiHost}/workouts`, this.appService.headerOptions()).subscribe(data => {
       this.setSelectedWorkout(data[0]);
       this.workoutsSource.next(<Workout[]>data);
     });
   }
 
   public setSelectedWorkout(workout: Workout) {
-    this.http.get(`${environment.apiHost}/workouts/${workout._id}`).subscribe(data => {
+    this.http.get(`${environment.apiHost}/workouts/${workout._id}`, this.appService.headerOptions()).subscribe(data => {
       console.log(data);
       this.selectedWorkoutSource.next(<Workout>data);
       this.exerciseService.fromWorkout(<Workout>data);
@@ -41,7 +46,7 @@ export class WorkoutService {
   }
 
   public createWorkout(workout: Workout) {
-    return this.http.post(`${environment.apiHost}/workouts`, workout).subscribe(newWorkout => {
+    return this.http.post(`${environment.apiHost}/workouts`, workout, this.appService.headerOptions()).subscribe(newWorkout => {
       this.workoutsSource.subscribe(workouts => {
         workouts.push(<Workout>newWorkout);
       });
@@ -49,7 +54,7 @@ export class WorkoutService {
   }
 
   public updateWorkout(workout: Workout) {
-    return this.http.put(`${environment.apiHost}/workouts/${workout._id}`, workout)
+    return this.http.put(`${environment.apiHost}/workouts/${workout._id}`, workout, this.appService.headerOptions())
       .subscribe(updatedWorkout => {
         this.workoutsSource.subscribe(workouts => {
           let index = workouts.map(wo => wo._id).indexOf(workout._id);
@@ -59,7 +64,7 @@ export class WorkoutService {
   }
 
   public deleteWorkout(workout: Workout) {
-    return this.http.delete(`${environment.apiHost}/workouts/${workout._id}`).subscribe(empty => {
+    return this.http.delete(`${environment.apiHost}/workouts/${workout._id}`, this.appService.headerOptions()).subscribe(empty => {
       this.workoutsSource.subscribe(workouts => {
         let index = workouts.map(wo => wo._id).indexOf(workout._id);
         workouts.splice(index, 1);

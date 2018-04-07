@@ -5,6 +5,7 @@ import { Exercise } from './exercise';
 import { Workout } from './workout';
 import { Subject } from 'rxjs/Subject';
 import { environment } from "../environments/environment";
+import { AppService } from './app.service';
 
 @Injectable()
 export class ExerciseService {
@@ -23,7 +24,7 @@ export class ExerciseService {
   private editingExerciseSource = new BehaviorSubject<Exercise>(null);
   public editingExercise$ = this.editingExerciseSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private appService: AppService) { }
 
   public fromWorkout(workout: Workout) {
     this.workout = workout;
@@ -42,14 +43,14 @@ export class ExerciseService {
   }
 
   public createExercise(exercise: Exercise) {
-    this.http.post(`${environment.apiHost}/workouts/${this.workout._id}/exercises`, exercise)
+    this.http.post(`${environment.apiHost}/workouts/${this.workout._id}/exercises`, exercise, this.appService.headerOptions())
       .subscribe(data => {
         this.fromWorkout(<Workout>data);
       });
   }
 
   public updateExercise(exercise: Exercise) {
-    this.http.put(`${environment.apiHost}/workouts/${this.workout._id}/exercises/${exercise._id}`, exercise)
+    this.http.put(`${environment.apiHost}/workouts/${this.workout._id}/exercises/${exercise._id}`, exercise, this.appService.headerOptions())
       .subscribe(data => {
         this.fromWorkout(<Workout>data);
       });
@@ -60,7 +61,7 @@ export class ExerciseService {
   }
 
   public deleteExercise(exercise: Exercise) {
-    this.http.delete(`${environment.apiHost}/workouts/${this.workout._id}/exercises/${exercise._id}`)
+    this.http.delete(`${environment.apiHost}/workouts/${this.workout._id}/exercises/${exercise._id}`, this.appService.headerOptions())
       .subscribe(data => {
         this.fromWorkout(<Workout>data);
       });

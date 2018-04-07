@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose");
 const Workout = require("../models/Workout");
+const secrets = require("../secrets.js");
 
-mongoose.connect("mongodb://192.168.1.111/workout");
+mongoose.connect(secrets.mongoConn);
 
 router.get('/', async (req, res) => {
   let workouts = await Workout.find({});

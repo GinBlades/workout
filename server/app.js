@@ -7,6 +7,7 @@ const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const session = require("express-session");
 
+const jwt = require("jsonwebtoken");
 const secrets = require("./secrets.js");
 
 const indexRouter = require('./routes/index');
@@ -37,6 +38,25 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Authentication middleware
+app.use((req, res, next) => {
+  if (req.url.startsWith("/login") || req.url === "/") {
+    return next();
+  }
+
+  console.log(req.headers);
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+    const token = req.headers.authorization.substring("Bearer ".length);
+    const decoded = jwt.verify(token, secrets.jwtSecret);
+    if (secrets.mockEmails.includes(decoded.email)) {
+      return next();
+    } else {
+      return res.json({error: "Invalid JWT"});
+    }
+  }
+  res.json({error: "Unauthorized"});
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
