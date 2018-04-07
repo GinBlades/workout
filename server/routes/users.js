@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const secrets = require("../secrets");
 
-mongoose.connect("mongodb://192.168.1.111/workout");
+mongoose.connect(secrets.mongoConn);
 
 router.get('/', async (req, res, next) => {
   let users = await User.find({});
@@ -29,6 +31,15 @@ router.put("/:id", async (req, res, next) => {
 router.delete("/:id",  async (req, res, next) => {
   await User.findOneAndRemove({ _id: req.params.id });
   res.sendStatus(204);
+});
+
+router.get("/auth/:token", (req, res) => {
+  let decoded = jwt.verify(req.params.token, secrets.jwtSecret);
+  if (decoded) {
+    res.json({email: decoded.email});
+  } else {
+    res.json({error: "Invalid token"});
+  }
 });
 
 module.exports = router;

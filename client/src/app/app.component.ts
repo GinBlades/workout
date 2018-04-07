@@ -20,12 +20,18 @@ export class AppComponent implements OnInit {
   constructor(
     private workoutService: WorkoutService,
     private exerciseService: ExerciseService,
-    private appService: AppService) {
-      const location = encodeURIComponent(window.location.href);
-      this.loginPath = appService.apiHost + "/login/token?redirect_to=" + location;
+    private appService: AppService
+  ) {
+    const location = encodeURIComponent(window.location.href);
+    this.loginPath = appService.apiHost + "/login/token?redirect_to=" + location;
+    const token = this.getToken();
+    if (token !== "") {
+      this.appService.login(token);
     }
+  }
 
   ngOnInit() {
+    this.appService.authenticated$.subscribe(data => console.log(data));
     this.exerciseService.editingExercise$.subscribe(data => this.setEditingExercise(data));
     this.workoutService.selectedWorkout$.subscribe(data => this.setRunningWorkout(data));
     this.workoutService.editingWorkout$.subscribe(data => this.setEditingWorkout(data));
@@ -59,5 +65,12 @@ export class AppComponent implements OnInit {
     }
 
     this.activePanel = "runningWorkout";
+  }
+
+  private getToken(): string {
+    const url = new URL(window.location.href);
+    const query = url.search;
+    const param = "token=";
+    return query.substring(query.indexOf(param) + param.length);
   }
 }
